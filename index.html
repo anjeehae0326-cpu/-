@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase 기반 스마트 투두 & 메모 웹앱</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Supabase JS CDN (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- 헤더 영역 -->
+    <header class="header">
+      <div class="header-left">
+        <h1>⚡ Supabase Todo App</h1>
+        <p class="subtitle">실시간 클라우드 데이터베이스 연동 웹 애플리케이션</p>
+      </div>
+      <button id="btnOpenConfig" class="btn-secondary">⚙️ Supabase 설정</button>
+    </header>
+
+    <!-- 연결 상태 알림 바 -->
+    <div id="statusBanner" class="status-banner offline">
+      <span class="status-dot"></span>
+      <span id="statusText">Supabase 연결 대기 중 (설정 버튼을 눌러 URL과 Key를 입력하세요)</span>
+    </div>
+
+    <!-- 할 일 입력 폼 -->
+    <form id="todoForm" class="todo-form">
+      <input 
+        type="text" 
+        id="todoInput" 
+        placeholder="새로운 할 일을 입력하고 Enter를 누르세요..." 
+        autocomplete="off" 
+        required
+      />
+      <button type="submit" class="btn-primary">추가</button>
+    </form>
+
+    <!-- 필터 및 정렬 -->
+    <div class="filter-container">
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="active">진행 중</button>
+        <button class="filter-btn" data-filter="completed">완료됨</button>
+      </div>
+      <span id="todoCount" class="todo-count">0개의 항목</span>
+    </div>
+
+    <!-- 로딩 스피너 -->
+    <div id="loadingSpinner" class="spinner-container hidden">
+      <div class="spinner"></div>
+      <p>데이터베이스와 동기화 중...</p>
+    </div>
+
+    <!-- 할 일 목록 -->
+    <ul id="todoList" class="todo-list">
+      <!-- 동적으로 생성되는 항목들 -->
+    </ul>
+  </div>
+
+  <!-- Supabase 설정 모달 -->
+  <div id="configModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🔑 Supabase 연동 설정</h2>
+        <button id="btnCloseConfig" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="help-text">
+          <a href="https://supabase.com/dashboard" target="_blank" rel="noopener">Supabase 대시보드</a> ➔ Project Settings ➔ API 에서 확인한 값을 입력하세요.
+        </p>
+        <div class="form-group">
+          <label for="inputSupabaseUrl">Project URL</label>
+          <input 
+            type="url" 
+            id="inputSupabaseUrl" 
+            placeholder="https://your-project.supabase.co" 
+          />
+        </div>
+        <div class="form-group">
+          <label for="inputSupabaseAnonKey">Anon Public Key</label>
+          <input 
+            type="password" 
+            id="inputSupabaseAnonKey" 
+            placeholder="eyJhbGciOiJIUzI1NiIsIn..." 
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnResetConfig" class="btn-danger">초기화</button>
+        <button id="btnSaveConfig" class="btn-primary">연결 및 저장</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
