@@ -51,8 +51,8 @@ function setupEventListeners() {
 
   // 모달 열기/닫기
   btnOpenConfig.addEventListener('click', () => {
-    inputSupabaseUrl.value = localStorage.getItem('SUPABASE_URL') || '';
-    inputSupabaseAnonKey.value = localStorage.getItem('SUPABASE_ANON_KEY') || '';
+    inputSupabaseUrl.value = localStorage.getItem('SUPABASE_URL') || (typeof DEFAULT_SUPABASE_URL !== 'undefined' ? DEFAULT_SUPABASE_URL : '');
+    inputSupabaseAnonKey.value = localStorage.getItem('SUPABASE_ANON_KEY') || (typeof DEFAULT_SUPABASE_ANON_KEY !== 'undefined' ? DEFAULT_SUPABASE_ANON_KEY : '');
     configModal.classList.remove('hidden');
   });
 
